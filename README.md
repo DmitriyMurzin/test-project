@@ -1,10 +1,18 @@
-This test job
+<html><body><h1>Test job</h1></body></html>
+
+Get git repos
+<code>git clone "this project"</code>
 
 Start docker-compose
+<code>sudo docker-compose start</code>
 
 Start all services
+<code>sudo docker-compose up</code>
 
-Look test page on address http://localhost
-Look in grafana on address http://localhost:3000
+Project successful start!
 
-This app work on httpd docker images with apache-exporter app for export metrics in prometheus.
+Look test page on address <link>http://localhost</link>
+Look in grafana on address <link>http://localhost:3000</link>
+
+This app work on httpd docker images with add apache-exporter app for export metrics in prometheus.
+For grafana and prometheus use standart official image from hub.docker.com.

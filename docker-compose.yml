@@ -2,10 +2,14 @@ version: '3'
 services:
   http:
     build: .
-
     ports:
     - "80:80"
     - "9000:9000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost"]
+      interval: 1ms
+      timeout: 5s
+      retries: 3
 
   grafana:
     image: grafana/grafana:6.4.2
@@ -23,6 +27,13 @@ services:
       - "3000:3000"
     links:
       - prometheus:prometheus
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
+      interval: 1ms
+      timeout: 5s
+      retries: 3
+    depends_on:
+     - prometheus
 
   prometheus:
     image: prom/prometheus:v2.13.0
@@ -34,3 +45,10 @@ services:
       - "9090:9090"
     links:
       - http:http
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9090"]
+      interval: 1ms
+      timeout: 5s
+      retries: 3
+    depends_on:
+     - http
