@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 15s
+  external_labels:
+    dc: 'test'
+
+scrape_configs:
+  - job_name: 'http-test'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['http:9000']
