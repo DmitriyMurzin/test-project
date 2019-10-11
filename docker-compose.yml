@@ -1,0 +1,36 @@
+version: '3'
+services:
+  http:
+    build: .
+
+    ports:
+    - "80:80"
+    - "9000:9000"
+
+  grafana:
+    image: grafana/grafana:6.4.2
+    volumes:
+      - ./grafana/:/etc/grafana/provisioning/
+    environment:
+      - VIRTUAL_HOST=grafana.loc
+      - GF_SERVER_ROOT_URL=http://localhost
+      - GF_SERVER_ROUTER_LOGGING=true
+      - GF_INSTALL_PLUGINS=grafana-simple-json-datasource
+      - GF_LOG_CONSOLE_FORMAT=json
+      - GF_LOG_FILTERS=alerting.notifier:debug,alerting.notifier.slack:debug,auth:debug
+      - GF_AUTH_TOKEN_ROTATION_INTERVAL_MINUTES=10
+    ports:
+      - "3000:3000"
+    links:
+      - prometheus:prometheus
+
+  prometheus:
+    image: prom/prometheus:v2.13.0
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    environment:
+      - VIRTUAL_HOST=localhost
+    ports:
+      - "9090:9090"
+    links:
+      - http:http
