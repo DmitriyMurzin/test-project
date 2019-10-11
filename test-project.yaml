@@ -9,7 +9,7 @@ spec:
   nodeSelector:
   containers:
   - name: test-image
-    image: registry.itecos.com:5000/test-project:0.1
+    image: registry.local:5000/test-project:0.1
     resources:
     limits:
     env:
